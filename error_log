@@ -1,0 +1,10 @@
+[20-Jan-2024 02:06:15 UTC] PHP Fatal error:  Uncaught Error: Class "ComposerAutoloaderInit06dc2f042a97206b9ccea4d6845c801d" not found in /home/helpmyworld/helpmyworld/vendor/autoload.php:7
+Stack trace:
+#0 /home/helpmyworld/helpmyworld/artisan(18): require()
+#1 {main}
+  thrown in /home/helpmyworld/helpmyworld/vendor/autoload.php on line 7
+[20-Jan-2024 02:06:18 UTC] PHP Fatal error:  Uncaught Error: Class "ComposerAutoloaderInit06dc2f042a97206b9ccea4d6845c801d" not found in /home/helpmyworld/helpmyworld/vendor/autoload.php:7
+Stack trace:
+#0 /home/helpmyworld/helpmyworld/artisan(18): require()
+#1 {main}
+  thrown in /home/helpmyworld/helpmyworld/vendor/autoload.php on line 7

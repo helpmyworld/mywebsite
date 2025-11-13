@@ -1,0 +1,61 @@
+
+/* Bookworm adapter for Laravel blades
+   Non-destructive overrides to mimic Bookworm styling without changing app logic.
+   Safe to remove at any time. */
+
+:root{
+  --bw-brand:#2a7de1;
+  --bw-ink:#1f2937;
+  --bw-muted:#6b7280;
+  --bw-bg:#f8fafc;
+  --bw-card:#ffffff;
+  --bw-line:#e5e7eb;
+  --bw-radius:12px;
+}
+
+/* Base */
+html,body{background:var(--bw-bg); color:var(--bw-ink); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+a{color:var(--bw-brand);}
+a:hover{text-decoration:none; color:#1f6ad1}
+
+/* Header */
+.site-header{background:#0b1f44; border:0; color:#fff}
+.site-title a{color:#fff !important}
+.site-nav a{color:#c7d2fe}
+.site-nav a[aria-current="page"], .site-nav a:hover{color:#fff; border-color:#60a5fa}
+.brand-bar{height:0}
+
+/* Layout */
+.wrap{max-width:1200px}
+.grid{gap:32px}
+.card{background:var(--bw-card); border:1px solid var(--bw-line); border-radius:var(--bw-radius); box-shadow:0 8px 24px rgba(2,6,23,.06); padding:18px}
+.card h3{border:0; margin-bottom:.5rem; color:#111827}
+
+/* Book list look (Bookworm-ish) */
+.post-list .post, .post-list article{border:0; box-shadow:0 8px 24px rgba(2,6,23,.06)}
+.post-list .meta{color:var(--bw-muted)}
+
+/* Sidebar book covers */
+.lbar .textwidget.custom-html-widget{aspect-ratio:3/4; width:100%; overflow:hidden; border-radius:10px; background:#f1f5f9}
+.lbar .textwidget.custom-html-widget img{width:100%; height:100%; object-fit:cover; display:block}
+
+/* Generic image safety */
+img{max-width:100%; height:auto; display:block}
+
+/* Book grid cards (common in Bookworm) */
+.bw-book{display:flex; gap:12px}
+.bw-book .thumb{flex:0 0 82px; aspect-ratio:3/4; border-radius:8px; overflow:hidden; background:#f1f5f9}
+.bw-book .thumb img{width:100%; height:100%; object-fit:cover}
+.bw-book .meta{display:flex; flex-direction:column; gap:2px}
+.bw-book .title{font-weight:700; line-height:1.25}
+.bw-book .author{color:var(--bw-muted); font-size:.95rem}
+.bw-book .price{color:#16a34a; font-weight:700}
+
+/* Pagination – bootstrap-like */
+.pagination{display:flex; gap:8px; list-style:none; padding:0; margin:16px 0}
+.pagination li a, .pagination li span{
+  display:inline-block; min-width:40px; text-align:center; padding:8px 12px;
+  border:1px solid var(--bw-line); border-radius:8px; background:#fff; color:#374151;
+}
+.pagination li.active span, .pagination li.active a{background:var(--bw-brand); color:#fff; border-color:transparent}
+.pagination li a:hover{border-color:#93c5fd; color:#1f2937}
