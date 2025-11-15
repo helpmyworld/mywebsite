@@ -79,7 +79,7 @@
           <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Posts</span> <span class="label label-important">3</span></a>
               <ul <?php if (preg_match("/banner/i", $url)){ ?> style="display: block;" <?php } ?>>
                   <li <?php if (preg_match("/add-banner/i", $url)){ ?> class="active" <?php } ?>><a href=" {{route ('posts.create')}}">Add Post</a></li>
-                  <li <?php if (preg_match("/view-banners/i", $url)){ ?> class="active" <?php } ?>><a href="">Post Edit</a></li>
+                
                   <li <?php if (preg_match("/view-banners/i", $url)){ ?> class="active" <?php } ?>><a href="{{route('posts.index')}}">View Posts</a></li>
               </ul>
           </li>
@@ -120,39 +120,7 @@
           </li>
       @endif
 
-      @if(Session::get('adminDetails')['benefits_access']==1)
-          <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Subscription</span> <span class="label label-important">2</span></a>
-              <ul <?php if (preg_match("/subscription/i", $url)){ ?> style="display: block;" <?php } ?>>
-                  <li><a href="{{ route('admin.subscription.benefits.index')}}">Manage Benefit</a></li>
-                  <li><a href="{{ route('admin.subscriptions.index')}}">Manage Subscription</a></li>
-              </ul>
-          </li>
-      @endif
-
-      @if(Session::get('adminDetails')['user_subscription_access']==1)
-          <li><a href="{{ route('admin.subscription.authors.index')}}">Active Subscriptions</a></li>
-      @endif
-
-
-      @if(Session::get('adminDetails')['works_access']==1)
-          <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Website Functions</span> <span class="label label-important">2</span></a>
-              <ul <?php if (preg_match("/work/i", $url)){ ?> style="display: block;" <?php } ?>>
-                  <li><a href="{{ route('admin.work.index')}}">Manage Website Functions</a></li>
-                  <li><a href="{{ route('admin.websites.index')}}">Add Website Packages</a></li>
-              </ul>
-          </li>
-      @endif
-
-      @if(Session::get('adminDetails')['hosts_access']==1)
-          <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Hosting Services</span> <span class="label label-important">2</span></a>
-              <ul <?php if (preg_match("/capacity/i", $url)){ ?> style="display: block;" <?php } ?>>
-                  <li><a href="{{ route('admin.capacity.index')}}">Manage Hosting Functions</a></li>
-                  <li><a href="{{ route('admin.hosts.index')}}">Add Hosting Packages</a></li>
-              </ul>
-          </li>
-      @endif
-
-
+     
 
       <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Shipping Charges</span> <span class="label label-important">2</span></a>
           <ul <?php if (preg_match("/banner/i", $url)){ ?> style="display: block;" <?php } ?>>

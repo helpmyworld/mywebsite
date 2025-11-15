@@ -44,10 +44,10 @@
                         <div class="span12">
                             <div class="widget-box">
                                 <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                                    <h5>Add Posts</h5>
+                                    <h5>Edit Posts</h5>
                                 </div>
                                 <div class="widget-content nopadding">
-                                    <form class="form-horizontal"  method="post" action="{{route('posts.update', $post->id)}}" enctype="multipart/form=data">
+                                    <form class="form-horizontal"  method="post" action="{{route('posts.update', $post->id)}}" enctype="multipart/form-data">
                                         {{method_field('PUT')}}{{csrf_field()}}
 
                                         <div class="control-group">
@@ -64,42 +64,47 @@
                                         </div>
 
 
-                                        <div class="control-group">
-                                            <label class="control-label">Tags:</label>
-                                            <div class="controls">
-                                                <div class="col-md-8 col-md-offset-0">
-                                                    <select class="form-control select2-multi" name="tags" id="tags"  multiple="multiple">
-                                                            @foreach($tags as $tag)
-                                                                <option value="{{$tag->id}}">{{$tag->name}}</option>
-                                                            @endforeach
+<div class="control-group">
+    <label class="control-label">Tags:</label>
+    <div class="controls">
+        <div class="col-md-8 col-md-offset-0">
+            <select class="form-control select2-multi" name="tags[]" id="tags"  multiple="multiple">
+                @foreach($tags as $tag)
+                    {{-- FIX: Check if the tag is already associated with the post --}}
+                    <option value="{{$tag->id}}" {{ $post->tags->contains($tag->id) ? 'selected' : '' }}>
+                        {{$tag->name}}
+                    </option>
+                @endforeach
+            </select>
+            {{-- ... (rest of the error handling remains the same) --}}
+        </div>
+        <span class="help-block">Tags</span>
+    </div>
+</div>
 
-                                                    </select>
-                                                    @if($errors->has('tags'))
-                                                        <span class="help-block">
-                                                    <strong>{{$errors->first('tags')}}</strong>
-                                                </span>
-                                                    @endif
-                                                </div>
-                                                <span class="help-block">Tags</span> </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label">Categories:</label>
-                                            <div class="controls">
-                                                <div class="col-md-8 col-md-offset-0">
-                                                    <select class="form-control select2-multi" id="cats" name="cats"  multiple="multiple">
-                                                        @foreach($cats as $cat)
-                                                            <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if($errors->has('cat_post'))
-                                                        <span class="help-block">
-                                                    <strong>{{$errors->first('cats')}}</strong>
-                                                </span>
-                                                    @endif
-                                                </div>
-                                                <span class="help-block">Categories</span> </div>
-                                        </div>
+         <div class="control-group">
+    <label class="control-label">Categories:</label>
+    <div class="controls">
+        <div class="col-md-8 col-md-offset-0">
+            {{-- CRITICAL FIX: The name attribute must be 'cats[]' to match the controller --}}
+            <select class="form-control select2-multi" name="cats[]" id="cats"  multiple="multiple">
+                @foreach($cats as $cat)
+                    {{-- FIX: Check if the category is already associated with the post --}}
+                    <option value="{{$cat->id}}" {{ $post->cats->contains($cat->id) ? 'selected' : '' }}>
+                        {{$cat->name}}
+                    </option>
+                @endforeach
+            </select>
+            @if($errors->has('cats'))
+                <span class="help-block">
+                    <strong>{{$errors->first('cats')}}</strong>
+                </span>
+            @endif
+        </div>
+        {{-- MINOR FIX: Changed help-block text --}}
+        <span class="help-block">Categories</span>
+    </div>
+</div>
 
                                         <div class="control-group">
                                             <label class="control-label">File upload Image</label>

@@ -48,6 +48,7 @@
                     <ul class="footer-list normal-list">
                         <li><a href="{{ url('page/manuscript-submissions') }}">Manuscript Submissions</a></li>                        
                         <li><a href="{{ url('/author/filter') }}">Authors</a></li>
+                        <li><a href="{{ url('blog') }}">Blog</a></li>
                     </ul>
                 </div>
             </div>

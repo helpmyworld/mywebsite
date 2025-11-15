@@ -130,32 +130,70 @@ class PostController extends Controller
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
+// ... (Controller boilerplate)
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
-        //
         $post = Post::find($id);
+
+        // 1. Validation: Ensure the slug is unique, excluding the current post's ID
         $this->validate($request, array(
-            'title' => "required|max:255",
-            'slug' => "required|min:3|max:255|unique:posts,slug, $id",
-            'body' => "required",
+            'title' => 'required|max:255',
+            'slug' => "required|min:3|max:255|unique:posts,slug,$id",
+            'body' => 'required',
         ));
+
+        // 2. Update Basic Fields
         $post->title = $request->title;
         $post->slug = $request->slug;
-//        $post->body = $request->body;
         $post->body = Purifier::clean($request->input('body'));
+
+        // 3. Handle Image Upload (No resize and using built-in store method)
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images');
+
+            // Save the new image to the 'public/images' directory
+            $image->move($location, $filename);
+
+            // OPTIONAL: Delete the old image file before saving the new one (Recommended)
+            // if ($post->image && file_exists(public_path('images/' . $post->image))) {
+            //     unlink(public_path('images/' . $post->image));
+            // }
+
+            $post->image = $filename; // Update the image filename in the database
+        }
+
+        // 4. Save the Post
         $post->save();
 
+        // 5. Sync Tags and Categories (Using sync with array syntax for multi-selects)
+        
+        // Tags: If $request->tags is set, sync the array; otherwise, pass an empty array to detach all.
+        $post->tags()->sync($request->tags ? (array)$request->tags : []);
 
-        if (isset($request->tags) || isset($request->categories)) {
-            $post->tags()->sync($request->tags);
-            $post->cats()->sync($request->cats);
-        } else {
-            $post->tags()->sync(array());
-            $post->cats()->sync(array());
-        }
+        // Categories: If $request->cats is set, sync the array; otherwise, pass an empty array to detach all.
+        $post->cats()->sync($request->cats ? (array)$request->cats : []);
+        
+        Session::flash('flash_message_success', 'Post successfully updated!');
         return redirect()->route('posts.show', $post->id);
-
     }
+
 
     /**
      * Remove the specified resource from storage.
